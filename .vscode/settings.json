@@ -3,7 +3,7 @@
         "javascript": "jsx"
     },
     "workbench.startupEditor": "newUntitledFile",
-    "editor.fontSize": 16,
+    "editor.fontSize": 12,
     "javascript.suggest.autoImports": true,
     "javascript.updateImportsOnFileMove.enabled": "always",
     "editor.rulers": [
@@ -82,7 +82,7 @@
     "editor.parameterHints.enabled": false,
     "editor.renderLineHighlight": "gutter",
     "cSpell.language": "en,pt",
-    "editor.lineHeight": 26,
+    "editor.lineHeight": 16,
     "material-icon-theme.languages.associations": {
         "dotenv": "tune"
     },
@@ -180,7 +180,6 @@
     ],
     "editor.semanticHighlighting.enabled": false,
     "breadcrumbs.enabled": true,
-    "workbench.productIconTheme": "fluent-icons",
     "editor.fontFamily": "JetBrains Mono",
     "gitlens.codeLens.authors.enabled": false,
     "editor.tabSize": 2,
@@ -205,7 +204,6 @@
     "[jsonc]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
-    "workbench.colorTheme": "Omni",
     "liveServer.settings.donotShowInfoMsg": true,
     "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features"
