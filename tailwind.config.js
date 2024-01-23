@@ -29,6 +29,9 @@ export default {
           700: "#121214",
           900: "#09090a",
         }
+      },
+      fontFamily: {
+        sans: "Roboto, sans-serif"
       }
     },
   },
