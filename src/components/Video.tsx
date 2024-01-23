@@ -1,3 +1,5 @@
+import { Player, Youtube, DefaultUi } from '@vime/react'
+import '@vime/core/themes/default.css'
 import {
   CaretRight,
   DiscordLogo,
@@ -11,7 +13,10 @@ export default function Videos () {
       {/* video area */}
       <div className='bg-black flex justify-center'>
         <span className='h-full w-full max-w-[1100px] max-h-[60vh] aspect-video'>
-          {/* TODO: video content */}
+          <Player>
+            <Youtube videoId='videoid' />
+            <DefaultUi />
+          </Player>
         </span>
       </div>
 
