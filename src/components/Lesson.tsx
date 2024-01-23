@@ -23,10 +23,13 @@ export default function Lesson ({
   )
 
   return (
-    <a href='#' className='flex flex-col gap-2'>
-      <span className='text-gray-300'> {availableDateFormatted} </span>
+    <a href='#' className='flex flex-col gap-2 group'>
+      <span className='text-gray-300 group-hover:text-white transition-colors'>
+        {' '}
+        {availableDateFormatted}{' '}
+      </span>
 
-      <div className='flex flex-col gap-4 border rounded p-4 mt-2 border-gray-500'>
+      <div className='flex flex-col gap-4 border rounded p-4 mt-2 border-gray-500 group-hover:border-green-500 transition-colors'>
         <header className='flex items-center justify-between'>
           {isLessonAvailable ? (
             <span className='flex gap-2 items-center text-blue-500'>
