@@ -6,31 +6,21 @@ import {
   FileArrowDown,
   Lightning
 } from 'phosphor-react'
-import {
-  GetLessonBySlugQuery,
-  useGetLessonBySlugQuery
-} from '../graphql/generated'
-import { useState } from 'react'
+import { useGetLessonBySlugQuery } from '../graphql/generated'
 
 interface VideoProps {
   lessonSlug: string
 }
-type PageContentType = GetLessonBySlugQuery | undefined
-
 export default function Videos ({ lessonSlug }: VideoProps) {
-  const [pageContent, setPageContent] = useState<PageContentType>(undefined)
-
   // getLessonsService ******************************************************
   let { data } = useGetLessonBySlugQuery({ variables: { slug: lessonSlug } })
-  if (!data)
+  if (!data || !data.lesson || !data.lesson.teacher)
     return (
       <p className='flex-1 align-middle text-center mt-auto'>Carregando...</p>
     )
-  else setPageContent(data)
+  let lesson = data.lesson
+  let lessonTeacher = lesson.teacher
   // getLessonsService ******************************************************
-
-  let lesson = pageContent!.lesson!
-  let lessonTeacher = lesson!.teacher!
 
   return (
     <section className='flex-1'>
@@ -51,20 +41,22 @@ export default function Videos ({ lessonSlug }: VideoProps) {
               {lesson.description}
             </p>
 
-            <div className='flex items-center gap-4 mt-6'>
-              <img
-                className='h-16 rounded-full border-2 border-blue-500'
-                src={lessonTeacher.avatarURL}
-                alt='avatar_icon'
-              />
+            {lessonTeacher && (
+              <div className='flex items-center gap-4 mt-6'>
+                <img
+                  className='h-16 rounded-full border-2 border-blue-500'
+                  src={lessonTeacher.avatarURL}
+                  alt='avatar_icon'
+                />
 
-              <span className='flex flex-col gap-4 leading-relaxed'>
-                <strong className='font-bold text-2xl block'>
-                  {lessonTeacher.name}
-                </strong>
-                <p className='text-gray-200 text-sm'>{lessonTeacher.bio}</p>
-              </span>
-            </div>
+                <span className='flex flex-col gap-4 leading-relaxed'>
+                  <strong className='font-bold text-2xl block'>
+                    {lessonTeacher.name}
+                  </strong>
+                  <p className='text-gray-200 text-sm'>{lessonTeacher.bio}</p>
+                </span>
+              </div>
+            )}
           </span>
 
           <span className='flex flex-col gap-4'>
