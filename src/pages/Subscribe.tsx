@@ -1,27 +1,18 @@
 import LogoSvg from '../components/Logo'
 import { FormEvent, useState } from 'react'
-import { gql, useMutation } from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
-
-const CREATE_SUBSCRIBER_MUTATION = gql`
-  mutation MyMutation($name: String!, $email: String!) {
-    createSubscriber(data: { name: $name, email: $email }) {
-      id
-    }
-  }
-`
+import { useCreateSubscriberMutation } from '../graphql/generated'
 
 export default function Subscribe () {
   const [name, setName] = useState<string>('')
   const [email, setEmail] = useState<string>('')
-  const [createSubscriber, { loading }] = useMutation(
-    CREATE_SUBSCRIBER_MUTATION,
-    {}
-  )
   const [submitError, setSubmitError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
-
   const navigate = useNavigate()
+
+  const [createSubscriber, { loading }] = useCreateSubscriberMutation({
+    variables: { email, name }
+  })
 
   function handleSubscribe (event: FormEvent) {
     event.preventDefault()
@@ -36,7 +27,7 @@ export default function Subscribe () {
       return
     }
 
-    // if(emailAlreadyExists) {
+    // if(subscriberAlreadyExists) {
     //     return // todo exception
     // }
 

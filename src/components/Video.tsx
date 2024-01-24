@@ -6,60 +6,38 @@ import {
   FileArrowDown,
   Lightning
 } from 'phosphor-react'
-import { gql, useQuery } from '@apollo/client'
-
-const GET_LESSON_BY_SLUG_QUERY = gql`
-  query MyQuery($slug: String) {
-    lesson(where: { slug: $slug }) {
-      description
-      videoId
-      title
-      teacher {
-        bio
-        name
-        avatarURL
-      }
-    }
-  }
-`
-interface GetLessonQueryByResponse {
-  lesson: {
-    videoId: string
-    title: string
-    description: string
-    teacher: {
-      bio: string
-      avatarURL: string
-      name: string
-    }
-  }
-}
+import {
+  GetLessonBySlugQuery,
+  useGetLessonBySlugQuery
+} from '../graphql/generated'
+import { useState } from 'react'
 
 interface VideoProps {
   lessonSlug: string
 }
+type PageContentType = GetLessonBySlugQuery | undefined
 
 export default function Videos ({ lessonSlug }: VideoProps) {
-  let { data } = useQuery<GetLessonQueryByResponse>(GET_LESSON_BY_SLUG_QUERY, {
-    variables: {
-      slug: lessonSlug
-    }
-  })
+  const [pageContent, setPageContent] = useState<PageContentType>(undefined)
 
-  if (!data) {
+  // getLessonsService ******************************************************
+  let { data } = useGetLessonBySlugQuery({ variables: { slug: lessonSlug } })
+  if (!data)
     return (
       <p className='flex-1 align-middle text-center mt-auto'>Carregando...</p>
     )
-  }
-  let videoId = data.lesson.videoId
+  else setPageContent(data)
+  // getLessonsService ******************************************************
+
+  let lesson = pageContent!.lesson!
+  let lessonTeacher = lesson!.teacher!
 
   return (
     <section className='flex-1'>
-      {/* video area */}
       <div className='bg-black flex justify-center'>
         <span className='h-full w-full max-w-[1100px] max-h-[60vh] aspect-video'>
           <Player>
-            <Youtube videoId={videoId} />
+            <Youtube videoId={lesson.videoId} />
             <DefaultUi />
           </Player>
         </span>
@@ -68,25 +46,23 @@ export default function Videos ({ lessonSlug }: VideoProps) {
       <div className='p-8 max-w-[1100px] mx-auto'>
         <article className='flex items-start gap-16'>
           <span className='flex-1'>
-            <h1 className='text-2xl font-bold'>{data.lesson.title}</h1>
+            <h1 className='text-2xl font-bold'>{lesson.title}</h1>
             <p className='mt-4 text-gray-200 leading-relaxed'>
-              {data.lesson.description}
+              {lesson.description}
             </p>
 
             <div className='flex items-center gap-4 mt-6'>
               <img
                 className='h-16 rounded-full border-2 border-blue-500'
-                src={data.lesson.teacher.avatarURL}
+                src={lessonTeacher.avatarURL}
                 alt='avatar_icon'
               />
 
               <span className='flex flex-col gap-4 leading-relaxed'>
                 <strong className='font-bold text-2xl block'>
-                  {data.lesson.teacher.name}
+                  {lessonTeacher.name}
                 </strong>
-                <p className='text-gray-200 text-sm'>
-                  {data.lesson.teacher.bio}
-                </p>
+                <p className='text-gray-200 text-sm'>{lessonTeacher.bio}</p>
               </span>
             </div>
           </span>
