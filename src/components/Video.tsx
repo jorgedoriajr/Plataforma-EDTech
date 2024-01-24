@@ -8,11 +8,7 @@ import {
 } from 'phosphor-react'
 import { useGetLessonBySlugQuery } from '../graphql/generated'
 
-interface VideoProps {
-  lessonSlug: string
-}
-export default function Videos ({ lessonSlug }: VideoProps) {
-  // getLessonsService ******************************************************
+export default function Videos ({ lessonSlug }: { lessonSlug: string }) {
   let { data } = useGetLessonBySlugQuery({ variables: { slug: lessonSlug } })
   if (!data || !data.lesson || !data.lesson.teacher)
     return (
@@ -20,7 +16,6 @@ export default function Videos ({ lessonSlug }: VideoProps) {
     )
   let lesson = data.lesson
   let lessonTeacher = lesson.teacher
-  // getLessonsService ******************************************************
 
   return (
     <section className='flex-1'>

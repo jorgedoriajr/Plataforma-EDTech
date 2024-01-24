@@ -4,7 +4,7 @@ export default function Sidebar () {
   const { data } = useGetLessonsQuery()
 
   return (
-    <aside className='w-[348px] bg-gray-700 p-6 border-l border-gray-600 flex flex-col'>
+    <aside className='w-[408px] bg-gray-700 p-6 border-l border-gray-600 flex flex-col'>
       <span className='font-bold text-2xl pb-6 mb-6 border-gray-50 block border-b border-b-gray-300'>
         Cronograma de aulas
       </span>
@@ -16,7 +16,7 @@ export default function Sidebar () {
               key={lesson.id}
               title={lesson.title}
               slug={lesson.slug!}
-              availableAt={new Date()}
+              availableAt={lesson.availableAt}
               type={lesson.lessonType}
             />
           )

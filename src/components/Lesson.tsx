@@ -28,18 +28,28 @@ export default function Lesson ({
   const isActivedLesson = slug === pageSlug.slug
 
   return (
-    <Link to={`/event/lesson/${slug}`} className='flex flex-col gap-2 group'>
-      <span className='text-gray-300 group-hover:text-white transition-colors'>
-        {' '}
-        {availableDateFormatted}{' '}
+    <Link
+      to={`/event/lesson/${slug}`}
+      className='flex flex-col gap-2 group p-4'
+    >
+      <span
+        className={classNames(
+          'text-gray-300 group-hover:text-white transition-colors',
+          {
+            'text-white': isActivedLesson
+          }
+        )}
+      >
+        {availableDateFormatted}
       </span>
 
       <div
         className={classNames(
-          'relative flex flex-col gap-4 border rounded p-4 mt-2 border-gray-500 group-hover:border-green-500 transition-colors',
+          'relative flex flex-col gap-4 border rounded p-4 mt-2 border-gray-800 group-hover:border-green-500 transition-colors',
           { 'bg-green-500': isActivedLesson }
         )}
       >
+        {/* ui arrow detail pointing to the video player */}
         <div
           className={classNames('', {
             'absolute w-[13px] h-[13px] top-[24%] rounded-[2px] left-[-6.5px] bg-green-500 rotate-45':
@@ -47,6 +57,7 @@ export default function Lesson ({
             'hidden invisible': !isActivedLesson
           })}
         ></div>
+        {/* ui arrow detail pointing to the video player */}
 
         <header className='flex items-center justify-between'>
           {isLessonAvailable ? (
@@ -68,7 +79,7 @@ export default function Lesson ({
 
           <span
             className={classNames(
-              'border text-white rounded px-2 py-[2px] text-xs',
+              'border text-white rounded px-2 py-[2px] text-xs truncate text-ellipsis max-w-[40%]',
               {
                 'border-white': isActivedLesson,
                 'border-green-500': !isActivedLesson
